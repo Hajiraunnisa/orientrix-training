@@ -35,3 +35,24 @@ This is the command to generate key value pair.After that My generated public ke
 git remote set-url origin git@github.com:Hajiraunnisa/orientrix-training.git This command is used to switch your existing repository to SSH.  
 
 ![alt text](image.png)
+git push -u origin master(here u stands for upstream) -u Makes the origin master default you dont need to write again and again master default.  
+If you are working on Github. You dont need to add/push. just commit changes it will host whereas if files were creayed locally you need to add,commit,push and if you dont have the permission to push directly first you pull the owner will review your work and then give you access to push.
+
+# Branching
+A branch is a separate line of work inside the same project.Without branches, everyone edits the same files at the same time — chaos.A branch is not a copy of your project. It's a label pointing to a specific commit.
+
+**Main-Branch** = It is the Actual Main branch from your Repository. **Feature Branch** = it is a specific task/feature where you can experiment safely.Any changes made to feature branch doesn't effect main branch.vice-versa.
+First, I created a new branch called new-branch using git checkout -b new-branch and confirmed I was on it with git branch. On this branch, I edited index.html, staged it with git add index.html, and committed with git commit -m "Adding new line on branch". I then made one more edit and committed again with git commit -m "Adding one more". 
+<img width="907" height="540" alt="image" src="https://github.com/user-attachments/assets/1f26dbc3-4d8a-40ab-af2f-c8db03bba91a" />
+
+Running git log --oneline --graph --all
+<img width="837" height="267" alt="image" src="https://github.com/user-attachments/assets/d14bac4c-1420-4df7-8a42-ef26c57ba444" />
+main stayed at commit aa1f086 (New file) while new-branch moved ahead to f22fd9a. I switched to main using git checkout main and saw my new lines disappear, then switched back with git checkout new-branch and the changes reappeared. This confirmed that branches keep work isolated. 
+git diff shows changes you made but haven't staged (added) yet.
+<img width="652" height="322" alt="image" src="https://github.com/user-attachments/assets/5859893a-52d0-496e-b730-f69a10ef6164" />
+It is clearly showing the difference between our main branch and new branch.
+Now,To push a new branch on github command is git push -u origin new-branch. 
+push	"Upload my commits to the remote"
+-u	--set-upstream — link this local branch to the remote branch
+origin	The nickname for your GitHub repo URL
+new-branch	The branch you're uploading (because Git doesn't yet know where new-branch should go on GitHub.)
