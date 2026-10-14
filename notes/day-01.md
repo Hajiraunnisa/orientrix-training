@@ -11,11 +11,18 @@ Git is open source version control system and github is where you host your appl
 New-Item -ItemType Directory -Force notes 
 This Command Creates a New directory. if you want to create file just replace directory with file and notes with the filename with markdown .md extension.
 "#" is used for main haeding.
-After Writing some content you have to save.cntrl+s.
-git add notes/day-01.md   
-git commit -m "Add day 01 learning notes"
-git push origin main
+After Writing some content you have to save.cntrl+s. /n
+git add notes/day-01.md   /n
+git commit -m "Add day 01 learning notes" /n
+git push origin main /n
 
 If you track commit changes on github,you will see red colour (represents lines which you deleted.) and green colour(lines which added).
+
 One Git repository normally has one .git folder, and that folder tracks changes for the entire repository.
+
 git config --global user.email hajiraunnisa333@gmail.com ---> it records in git meta data who made the changes or author of commits.
+
+When you write push command it need authentication. A way of Confirming Your identity. I used HTTPS to communicate with github server. In windows you have a Git Credential Manager that opens a browser where i need to sign in with github account.Github authorises the tool,accept/reject the action and store the credential.Git reuse it in future without asking us to enter password every time.
+
+## SSH 
+I will have private key and github will have corresponding public key.With SSH i prove that i'm the only one who have private key corresponding  to  public key registered at github.
