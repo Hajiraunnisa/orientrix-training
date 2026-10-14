@@ -1,4 +1,4 @@
-#Git And Github 
+# Git And Github 
 Git is open source version control system and github is where you host your application,store repository and Collabrate with teams working on same project.
 
 **Different Commands-**
