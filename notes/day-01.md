@@ -27,10 +27,11 @@ When you write push command it need authentication. A way of Confirming Your ide
 ## SSH 
 I will have private key and github will have corresponding public key.With SSH i prove that i'm the only one who have private key corresponding  to  public key registered at github.
 ssh-keygen -t ed25519 -C "hajiraunnisa333@gmail.com"  
-This is the command to generate key value pair.After that My generated public key is SHA256:GtLGEQKW1tB6XBXdSVMYqTRMrl6EJAEMCqoRKSR+ct0 which should be added to github SSH keys.  
+This is the command to generate key value pair.After that My generated public key is ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINDJZmBMc4lERxj5slYVbpVCTsaYNOLTTmHrFtxC8txV hajiraunnisa333@gmail.com which should be added to github SSH keys.  
 <img width="1247" height="706" alt="Screenshot 2026-10-14 230459" src="https://github.com/user-attachments/assets/6fb9ae32-4f55-46f4-8afa-9afd7413ace2" />
 git remote set-url origin git@github.com:Hajiraunnisa/orientrix-training.git This command is used to switch your existing repository to SSH.  
 <img width="1146" height="145" alt="image" src="https://github.com/user-attachments/assets/a48da71c-104b-44c7-b772-6f9dee68fb39" />
+
 
 
 
