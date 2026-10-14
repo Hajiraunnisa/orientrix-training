@@ -61,10 +61,11 @@ After pushing your branch to GitHub you need to merge- There are 2 ways
   Click it, add a title/description, then click "Create pull request".
   Click "Merge pull request" → "Confirm merge".
 * Using Local Computer git pull origin new-branch enter this command.
-Once the Branch is merged its job is done so delete the branch you have created initially using git branch -d branch name.
-git commit -am "New update to learn" - This adds and commit both at once.Its a shortcut works only for modified file.
-commit before switching branches. uncommitted changes travel with you when you switch, which can cause conflicts or mess up the wrong branch. Committing keeps your work safe and tied to the right branch.
-git log provides the meta data of whatever changes made from start to end.
-git reset — moves your branch pointer back, changing commit history (uncommit / unstage).
-git restore — only touches files, discards or unstages changes (never moves commits).
-HEAD — pointer to your current commit; HEAD~1 = one commit back, HEAD~3 = three back.
+  
+Once the Branch is merged its job is done so delete the branch you have created initially using git branch -d branch name.  
+git commit -am "New update to learn" - This adds and commit both at once.Its a shortcut works only for modified file.  
+commit before switching branches. uncommitted changes travel with you when you switch, which can cause conflicts or mess up the wrong branch. Committing keeps your work safe and tied to the right branch.  
+git log provides the meta data of whatever changes made from start to end.    
+git reset — moves your branch pointer back, changing commit history (uncommit / unstage).  
+git restore — only touches files, discards or unstages changes (never moves commits).  
+HEAD — pointer to your current commit; HEAD~1 = one commit back, HEAD~3 = three back.  
