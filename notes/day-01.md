@@ -11,10 +11,13 @@ Git is open source version control system and github is where you host your appl
 New-Item -ItemType Directory -Force notes 
 This Command Creates a New directory. if you want to create file just replace directory with file and notes with the filename with markdown .md extension.
 "#" is used for main haeding.
-After Writing some content you have to save.cntrl+s. /n
-git add notes/day-01.md   /n
-git commit -m "Add day 01 learning notes" /n
-git push origin main /n
+After Writing some content you have to save.cntrl+s. 
+
+git add notes/day-01.md   
+
+git commit -m "Add day 01 learning notes" 
+
+git push origin main 
 
 If you track commit changes on github,you will see red colour (represents lines which you deleted.) and green colour(lines which added).
 
