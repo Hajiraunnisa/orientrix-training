@@ -68,4 +68,5 @@ commit before switching branches. uncommitted changes travel with you when you s
 git log provides the meta data of whatever changes made from start to end.    
 git reset — moves your branch pointer back, changing commit history (uncommit / unstage).  
 git restore — only touches files, discards or unstages changes (never moves commits).  
-HEAD — pointer to your current commit; HEAD~1 = one commit back, HEAD~3 = three back.  
+HEAD — pointer to your current commit; HEAD~1 = one commit back, HEAD~3 = three back. 
+Forking means you can make changes to your own copy without needing permission to modify the original repository.
