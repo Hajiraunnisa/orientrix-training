@@ -45,7 +45,7 @@ The server does not automatically remember the previous request when processing 
 
 Express checks two things to decide which function to execute:  // It is part of node.js
 1. HTTP method — What type of request is it? (GET, POST, etc.)
-2. URL path — Which endpoint is the client requesting? (/hello, /about, etc.)
+2. URL path — Which endpoint is the client requesting? (/hello, /about, etc.)\
 Node.js: Allows us to run JavaScript outside the browser, such as on a server.\
 Express.js: A Node.js framework used to create web servers and APIs easily.\
 When a client sends a request, Express matches the HTTP method and URL path with the defined route and executes the corresponding function.req contains information about the incoming request, while res is used to send a response back to the client.res.json() sends data in JSON format, while res.send() sends a response such as text.app.listen(PORT) starts the server and allows it to receive requests.\
