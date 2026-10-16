@@ -82,6 +82,61 @@ You use one command and a text message is sent. You don't need to know how phone
 >curl -X POST "https://api.twilio.com/2010-04-01/Accounts/ACa24....../Messages.json" -H "Content-Type: application/x-www-form-urlencoded" -d "To=%2..........51" -d "From=%..........4" -d "Body=sms_2fa" -u "ACa2413e42fd99..........e5ff:ad594eb39f3f8.........fb2cef1673e"\
 With this command i sent a message 
 <img width="1465" height="271" alt="Screenshot 2026-10-16 175923" src="https://github.com/user-attachments/assets/3359a84d-df76-4a27-a593-59fa61ab0611" />
+
 curl -X GET "https://api.twilio.com/2010-04-01/Accounts/ACa2413e42fd9.......a87d86e5ff/Messages.json" -u "ACa2413e42fd99...........d86e5ff:ad594.......e9d9fb2cef1673e" | jq
 This command is used to get message logs.
-| jq -
+<img width="1902" height="961" alt="image" src="https://github.com/user-attachments/assets/f4ae18cf-7a3d-4286-ad01-650feaded94b" />
+
+| jq - which is used at the end of commands.
+Pretty-Printing	Converts messy, hard-to-read JSON into a clean, human-readable format.
+# REST FOX
+Postman is a visual tool for exploring APIs,started as a chrome extension but now a powerful tool\
+Remember - The query string starts at the ? and is a list of filters separated by &. By using REST FOX i'm getting message from twilix to my server and also sending message(post).
+I have sent the get request in Rest fox 
+https://api.twilio.com/2010-04-01/Accounts/ACa2413e4,.........87d86e5ff/Messages.json?To=+17372508034 
+then response is sent from server
+
+<img width="1895" height="487" alt="image" src="https://github.com/user-attachments/assets/1c51eb8b-b0cb-468a-a0c2-3455473cfb95" />
+
++ sign should always be URL-encoded as %2B whenever it appears in the value of a query parameter
+  URL Consist of protocol (http) , host (abc.com),/port,path to resource / endpoint and query.
+next,duplicates his first request to create a reusable "Send Message" request — while noting that trial accounts can only send to verified numbers.\
+
+<img width="1912" height="852" alt="image" src="https://github.com/user-attachments/assets/b5dda3c3-0ebe-4966-baf8-ee689e0a9fb5" />
+
+SET UP THE ENVIRONMENT VARIABLE SO THAT U DONT HAVE TO MANNUALLY COPY PASTE ALL TIME.
+You write them once, in JSON format
+Then in any request, you use {{ variableName }} to insert them.
+The {{ }} tells REST Fox: "Don't use this text literally — look up the value in my environment."
+
+## POSTMAN
+Postman is a free visual tool for exploring and testing APIs. Instead of typing long cURL commands in the terminal, you fill in boxes and click buttons.
+Send any API request (GET, POST, PUT, DELETE)
+
+* Add headers, body data, and query parameters easily
+* See responses in clean, color-coded JSON
+* Save requests in folders called Collections
+* Use variables {{ }} to store secrets in one place
+* Generate code in any language (cURL, Python, JavaScript, PHP, etc.)
+* Import shared collections from the Postman API Network (companies publish ready-made collections)
+
+SDK = Software Development Kit (also called a helper library).\
+It is a package of code written in a specific language that:
+Handles all the HTTP requests for you.
+Provides simple functions like client.messages.create(...)
+Is already written, tested, and ready to use.
+You install it like any other library, then call its functions in your code.\
+Boilerplate is the repitative code so SDK Tool removes it.you dont need to write boring repeated code everyime.SDK handles it through it libraries.\
+# Thunder Client 
+Thunder Client is a REST API client that runs as an extension inside VS Code. It is installed via Command+Shift+P → Install Extensions → search "Thunder Client." Collections are created, and authentication is set at the collection level so every request inherits credentials. This is a feature REST Fox does not have.
+
+# HTTP Caching —
+HTTP caching avoids unnecessary re-downloads. Every file on a server has a Last-Modified timestamp recorded by the file system. When a request includes the header If-Modified-Since with a date, the server compares its own timestamp with the client's date. If they match, the server replies 304 Not Modified with zero bytes. If the file is newer, the server sends the full file with 200 OK.The server does not track individual clients. It simply compares two dates at the moment of the request.\
+
+# vs code
+The explorer.js file is a Node.js script that uses Twilio's helper library to make API calls to the Twilio service. It is created and run inside Visual Studio Code.The Twilio helper library is installed by running npm install twilio in the VS Code terminal. npm stands for Node Package Manager, and this command downloads the Twilio SDK into the project.\
+Secret keys are stored in a file called Twilio.env. This file contains the Twilio Account SID and Auth Token. The file is loaded into the environment by running source Twilio.env. The variables are verified by running echo $TWILIO_ACCOUNT_SID.
+
+<img width="1393" height="841" alt="Screenshot 2026-10-17 033931" src="https://github.com/user-attachments/assets/1b33a222-e018-424e-b6cf-61eb7159b972" />
+The first line loads the Twilio SDK library using require('twilio'). The Account SID and Auth Token are passed into it from the environment variables. This creates an authenticated client — an object that knows who the user is and can make requests on their behalf.\
+The output order was not the order code was written. "Starting Program" printed first, then "Gathering message log" printed later, after the API call finished.Because the API call runs in the background and takes some time (response time) JavaScript doesn't wait for it. It moves on immediately and execute next lines.
