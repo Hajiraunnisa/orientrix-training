@@ -134,9 +134,111 @@ Thunder Client is a REST API client that runs as an extension inside VS Code. It
 HTTP caching avoids unnecessary re-downloads. Every file on a server has a Last-Modified timestamp recorded by the file system. When a request includes the header If-Modified-Since with a date, the server compares its own timestamp with the client's date. If they match, the server replies 304 Not Modified with zero bytes. If the file is newer, the server sends the full file with 200 OK.The server does not track individual clients. It simply compares two dates at the moment of the request.\
 
 # vs code
-The explorer.js file is a Node.js script that uses Twilio's helper library to make API calls to the Twilio service. It is created and run inside Visual Studio Code.The Twilio helper library is installed by running npm install twilio in the VS Code terminal. npm stands for Node Package Manager, and this command downloads the Twilio SDK into the project.\
-Secret keys are stored in a file called Twilio.env. This file contains the Twilio Account SID and Auth Token. The file is loaded into the environment by running source Twilio.env. The variables are verified by running echo $TWILIO_ACCOUNT_SID.
+The explorer.js file is a Node.js script that uses Twilio's helper library to make API calls to the Twilio service. It is created and run inside Visual Studio Code.The Twilio helper library is installed by running npm install twilio in the VS Code terminal.  this command downloads the Twilio SDK into the project.\
+Secret keys are stored in a file called Twilio.env.\
+setx TWILIO_ACCOUNT_SID "ACa2413e.............86e5ff"\
+setx TWILIO_AUTH_TOKEN "your_auth_token_here" \ when you run this automatically the values of auth token and account sid is set.
 
 <img width="1393" height="841" alt="Screenshot 2026-10-17 033931" src="https://github.com/user-attachments/assets/1b33a222-e018-424e-b6cf-61eb7159b972" />
-The first line loads the Twilio SDK library using require('twilio'). The Account SID and Auth Token are passed into it from the environment variables. This creates an authenticated client — an object that knows who the user is and can make requests on their behalf.\
-The output order was not the order code was written. "Starting Program" printed first, then "Gathering message log" printed later, after the API call finished.Because the API call runs in the background and takes some time (response time) JavaScript doesn't wait for it. It moves on immediately and execute next lines.
+
+
+```javascript
+const twilio = require("twilio");  // Loads Twilio library.require is keyword to load
+const accountSid = process.env.TWILIO_ACCOUNT_SID; //get these values from .env
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = twilio(accountSid, authToken);  //twilio function call by passing parameters and storing result in client
+
+console.log("Starting Program");
+
+async function listMessage() {   //async means it always return promise.
+  const messages = await client.messages.list({ limit: 20 });   // API call. on server(here client object of twilio) there is messages resource in which list is a method.list of messages are returned.
+  messages.forEach((m) => console.log(m.body));
+}
+
+console.log("Gathering message log");
+listMessage();
+```
+
+The output order was not the same as the order in which the API request completed. `"Starting Program"` prints first, followed by `"Gathering message log"`. The API call runs asynchronously, so JavaScript can continue executing the next lines without waiting for the API response.
+async fucntion always returns promise.await means it waits till the api send response(promise).but javascript will execute rest part.await pauses the async function, not the entire JavaScript program. Other code outside that function can continue executing while the request is pending.\
+When the API call finishes, the program prints the message bodies returned by Twilio.\
+If twilio sever returns an error,the server crashes.and doesn't execute rest of the code.We need to handle that.by placing entire await part in try block which include all the code if server response is success it will execute and then catch block to catch error.but in javascript you cannot use alone catch block without try block.
+<img width="1300" height="827" alt="image" src="https://github.com/user-attachments/assets/50d293ac-d520-4dda-a925-c47a5839a4d3" />
+
+```javascript
+const twilio = require("twilio"); 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = twilio(accountSid, "12345");
+console.log("Starting Program");
+async function listMessage() {
+try{
+  const messages = await client.messages.list({ limit: 20 });
+  messages.forEach((m) => console.log(m.body));
+}
+catch (error) {console.error("Error fetching messages:", error);
+}
+console.log("line inside the catch block");
+}
+console.log("Gathering message log");
+listMessage();
+
+```
+Eventhough there is an error from server side it is been caught and server doesn't crash.it executes the rest part.That is Line inside the catch block.
+<img width="1377" height="451" alt="image" src="https://github.com/user-attachments/assets/ae68805f-f559-4e27-964c-d4035b7ccf30" />
+
+The Same thing You can try using .then and .catch/
+then block is executed when server call is successful,if there is an error .catch is executed.
+```javascript
+const twilio = require("twilio"); 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = twilio(accountSid, "12345");
+console.log("Starting Program");
+async function listMessage() {
+  client.messages.list({ limit: 20 })
+.then((messages) => {
+  messages.forEach((m) => console.log(m.body));
+})
+.catch((error) => {
+  console.error("Error fetching messages:", error);
+  console.log("line inside the catch block");
+});
+}
+console.log("Gathering message log");
+listMessage();
+```
+<img width="1366" height="416" alt="image" src="https://github.com/user-attachments/assets/ada46982-b060-417a-9194-e1cf65630ef9" />
+
+ client.messages(message.sid).remove());\
+ this command is used to delete message but the feature is not available on trial account.
+ async/await is better than .then() because some varaibe v = await ...some api call... The variable holds the value not the promise. and next steps are executed line by line.means the varible can be used anywhere inside the function.it looks completely like sync but it is async.when u use await it pauses after than only the messages value is assigned. where as in .then() there is no variable but still the code works.you can also use varible but still it hold promise. 
+ **with variable**
+ ```javascript
+ const result = client.messages.list({ limit: 5 }); //here no await so result is a promise
+ 
+result.then()........rest of the code
+```
+
+**without variable**
+```javascript
+result.then((messages) => {     // without variable
+  console.log(messages);   // the array — inside the callback
+//message value can be used inside this .then only
+});
+```
+ but after fullfilling the promise the code .then() works.
+**async and await**
+ async function run() {
+  const messages = await client.messages.list();   // ← variable, holds array
+  console.log(messages);
+}
+
+# project
+Component is a piece of ui like button,list,page. it has life which create(mount),live(update),die(unmount).so in life cycle you have different component methods like componentdidmount(),....this is the lifecycle method.they decide when to appear/disappear on screen or when to store values using components. another way without the lifecycle method is using hooks.UseEffect is one hook that replaces all three fucntions of lifecycle.\
+useState — "remember this value"
+A webhook is when the API calls you instead of you calling the API.
+You configure a URL (the webhook)
+When something happens (a text arrives), Twilio sends a POST request to your URL
+Your code runs and responds
+ This is called "data shaping" — transforming data from one format into the format your client needs.Serverless means someone else manages the servers. Twilio Functions is one example. 
