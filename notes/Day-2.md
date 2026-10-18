@@ -234,6 +234,25 @@ result.then((messages) => {     // without variable
   console.log(messages);
 }
 
+**Basic Boilerplate code to call api**
+```javascript
+
+async function functionName() {
+    try {
+        const response = await fetch("BASE_URL/RESOURCE_ENDPOINT");
+
+        const data = await response.json();
+
+        console.log(data);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+functionName();
+```
+
 # project
 Component is a piece of ui like button,list,page. it has life which create(mount),live(update),die(unmount).so in life cycle you have different component methods like componentdidmount(),....this is the lifecycle method.they decide when to appear/disappear on screen or when to store values using components. another way without the lifecycle method is using hooks.UseEffect is one hook that replaces all three fucntions of lifecycle.\
 useState — "remember this value"
@@ -242,3 +261,4 @@ You configure a URL (the webhook)
 When something happens (a text arrives), Twilio sends a POST request to your URL
 Your code runs and responds
  This is called "data shaping" — transforming data from one format into the format your client needs.Serverless means someone else manages the servers. Twilio Functions is one example. 
+ 
