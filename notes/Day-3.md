@@ -3,19 +3,19 @@ Database- It is a collection of related infromation.\
 DBMS- A software that helps user create and maintain database.\
 Now,We have 2 tyoes of database- Reational and Non Relational. Relational means Entire data is organised in rows and column.Each row differ from all other row by primary key(example-MYsql,oracle,postgresql,sql server). whereas Non relational means stores data in formats like documents (JSON), key-value pairs and graphs etc.. (mongodb,dynamodb,firebase)\
 In RDBMS,Rows represent entry(1 student) and column represent attribute.
-Surrogate key has no real world meaning just created to identify a row.\
+Surrogate key has no real world meaning just created to identify a row. \
 SQL is used to interact with RDBMS.
-Types of SQL Command\
-1. DQL (Data Query Language) : Used to retrieve data from databases. (SELECT)\
-2. DDL (Data Definition Language) : Used to create, alter, and delete database objects like tables, indexes, etc. (CREATE, DROP, ALTER, RENAME, TRUNCATE)\
-3. DML (Data Manipulation Language): Used to modify the database. (INSERT,UPDATE, DELETE)\
-4. DCL (Data Control Language): Used to grant & revoke permissions. (GRANT,REVOKE)\
-5. TCL (Transaction Control Language): Used to manage transactions. (COMMIT,ROLLBACK, START TRANSACTIONS, SAVEPOINT)\
+Types of SQL Command \
+1. DQL (Data Query Language) : Used to retrieve data from databases. (SELECT) \
+2. DDL (Data Definition Language) : Used to create, alter, and delete database objects like tables, indexes, etc. (CREATE, DROP, ALTER, RENAME, TRUNCATE) \
+3. DML (Data Manipulation Language): Used to modify the database. (INSERT,UPDATE, DELETE) \
+4. DCL (Data Control Language): Used to grant & revoke permissions. (GRANT,REVOKE) \
+5. TCL (Transaction Control Language): Used to manage transactions. (COMMIT,ROLLBACK, START TRANSACTIONS, SAVEPOINT) \
 **CREATE TABLE TABLENAME**  - Used to create a new table in the database.
 ● ALTER TABLE:
-○ Used to modify the structure of an existing table.
-○ You can add, modify, or drop columns, constraints, and more.
-○ Example: ALTER TABLE employees ADD COLUMN email VARCHAR(100)
+○ Used to modify the structure of an existing table.  
+○ You can add, modify, or drop columns, constraints, and more.  
+○ Example: ALTER TABLE employees ADD COLUMN email VARCHAR(100)  
 ● DROP TABLE:
 ○ Used to delete an existing table along with its data and structure.
 ○ Example: DROP TABLE employees
