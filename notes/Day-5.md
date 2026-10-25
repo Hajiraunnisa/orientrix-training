@@ -124,7 +124,7 @@ The API should return information about user ID 1.
 
 ## 6. Collections
 
-A collection is a group of saved API requests.
+A collection is a group of related API requests saved together.List of Multiple Requests Connected to same API.
 
 Example: A Student API collection might contain:
 - Get all students.
@@ -138,13 +138,12 @@ Example: A Student API collection might contain:
 - Reuse saved requests.
 - Run multiple requests together.
 - Share requests with team members.
-- Perform regression testing.
 
 ---
 
 ## 7. Variables in Postman
 
-Variables store values that can be reused in multiple requests.
+Variables store values that can be reused.Instead of Typing base address repeatedly, you can store it in variable and make use of it in multiple requests.
 
 Example:
 
@@ -166,7 +165,6 @@ Postman substitutes the variable when sending the request.
 - Avoid repeating URLs and IDs.
 - Make requests reusable.
 - Switch between environments easily.
-- Simplify automated testing.
 
 **Security note:** Never commit real passwords, API tokens, or secrets to a public GitHub repository.
 
@@ -174,7 +172,7 @@ Postman substitutes the variable when sending the request.
 
 ## 8. Query Parameters
 
-Query parameters provide additional information to an API request.
+Query parameters provide additional information to an API request.It filter or control the results returned by an API.
 
 Example:
 
