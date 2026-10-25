@@ -433,12 +433,9 @@ pm.test("Response contains an ID", function () {
 - `pm.expect()` checks whether an expected condition is true.
 - A failed assertion causes the test to fail.
 
-**Note:** Use the expected status code for the specific operation. A successful POST may return 201, while a successful DELETE may return 204.
-
 ---
-
 ## 18. More Postman Test Examples
-
+When we send a request in Postman, we should not only check whether it succeeded. We should also verify whether the response contains the correct data.
 ### Test 1: Check the Status Code
 
 ```javascript
@@ -515,18 +512,6 @@ pm.test("Name is not empty", function () {
 - Check Content-Type.
 - Verify required headers.
 - Check relevant security headers when required.
-
-### Business Logic Testing
-- Verify that records are created correctly.
-- Verify that updates affect the intended fields.
-- Ensure users cannot access unauthorized data.
-- Check duplicate records.
-- Verify invalid input handling.
-
-### Performance Testing
-- Check response time against a requirement.
-- Investigate slow endpoints.
-- Use appropriate load-testing tools for concurrent traffic and scalability testing.
 
 ---
 
