@@ -60,7 +60,6 @@ All 10 requests executed successfully.
 
 **Summary:** 10 requests — 20 tests — 20 passed — 0 failed.
 
-*(Screenshot of the Collection Runner summary: `postman_results.png`)*
 
 ---
 
