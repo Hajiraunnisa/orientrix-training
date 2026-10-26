@@ -63,16 +63,136 @@ All 10 requests executed successfully.
 
 ---
 
-## 5. How to Reproduce
+## 5. Request Bodies and Test Script
 
-1. Open Postman and sign in (free account is fine).
-2. Create a new collection named **"Task3 - JSONPlaceholder API Tests"**.
-3. Create the 10 requests listed in Section 2 with the given method and URL.
-4. For requests 04, 05, and 06, set **Body → raw → JSON** with the payloads shown below.
-5. Add the test scripts (Section 6) to each request's **Tests** tab.
-6. Click the collection name → **Run** → set the options in Section 3 → click **Run**.
-7. Confirm all tests show green **Pass**.
-8. Export the collection: right-click collection → **Export** → **Collection v2.1** → save as `Task3_Postman_Collection.json`.
+01 — Get All Posts\
+Method: GET\
+URL: https://jsonplaceholder.typicode.com/posts\
+Body: None\
 
----
+Test script:\
 
+javascript
+```
+pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+pm.test('Response is an array', function () { pm.expect(pm.response.json()).to.be.an('array'); });
+pm.test('Array is not empty', function () { pm.expect(pm.response.json().length).to.be.greaterThan(0); });
+pm.test('First post has userId and title', function () {
+    var first = pm.response.json()[0];
+    pm.expect(first).to.have.property('userId');
+    pm.expect(first).to.have.property('title');
+});
+02 — Get Single Post
+Method: GET
+URL: https://jsonplaceholder.typicode.com/posts/1
+Body: None
+
+Test script:
+
+javascript
+pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+pm.test('Body has ID 1', function () { pm.expect(pm.response.json().id).to.eql(1); });
+pm.test('Body has title string', function () { pm.expect(pm.response.json().title).to.be.a('string'); });
+03 — Get Comments for Post 1
+Method: GET
+URL: https://jsonplaceholder.typicode.com/posts/1/comments
+Body: None
+
+Test script:
+
+javascript
+pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+pm.test('Response is array', function () { pm.expect(pm.response.json()).to.be.an('array'); });
+pm.test('Comment contains email', function () { pm.expect(pm.response.json()[0]).to.have.property('email'); });
+04 — Create New Post
+Method: POST
+URL: https://jsonplaceholder.typicode.com/posts
+Headers: Content-Type: application/json
+Body (raw → JSON):
+
+json
+{
+    "title": "Test Post",
+    "body": "This is a test body",
+    "userId": 1
+}
+Test script:
+
+javascript
+pm.test('Status code is 201', function () { pm.response.to.have.status(201); });
+pm.test('Response has ID', function () { pm.expect(pm.response.json()).to.have.property('id'); });
+pm.test('Title matches sent data', function () { pm.expect(pm.response.json().title).to.eql('Test Post'); });
+05 — Update Post (PUT)
+Method: PUT
+URL: https://jsonplaceholder.typicode.com/posts/1
+Headers: Content-Type: application/json
+Body (raw → JSON):
+
+json
+{
+    "id": 1,
+    "title": "Updated Title",
+    "body": "Updated Body",
+    "userId": 1
+}
+Test script:
+
+javascript
+pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+pm.test('Title is updated', function () { pm.expect(pm.response.json().title).to.eql('Updated Title'); });
+06 — Patch Post
+Method: PATCH
+URL: https://jsonplaceholder.typicode.com/posts/1
+Headers: Content-Type: application/json
+Body (raw → JSON):
+
+json
+{
+    "title": "Patched Title"
+}
+Test script:
+
+javascript
+pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+pm.test('Title is patched', function () { pm.expect(pm.response.json().title).to.eql('Patched Title'); });
+07 — Delete Post
+Method: DELETE
+URL: https://jsonplaceholder.typicode.com/posts/1
+Body: None
+
+Test script:
+
+javascript
+pm.test('Status code is 200 or 204', function () { pm.expect([200, 204]).to.include(pm.response.code); });
+08 — Get Users
+Method: GET
+URL: https://jsonplaceholder.typicode.com/users
+Body: None
+
+Test script:
+
+javascript
+pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+pm.test('Response is array', function () { pm.expect(pm.response.json()).to.be.an('array'); });
+pm.test('User has email field', function () { pm.expect(pm.response.json()[0]).to.have.property('email'); });
+09 — Get Albums
+Method: GET
+URL: https://jsonplaceholder.typicode.com/albums
+Body: None
+
+Test script:
+
+javascript
+
+pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+pm.test('Album has userId', function () { pm.expect(pm.response.json()[0]).to.have.property('userId'); });
+10 — Invalid Resource (404 Check)
+Method: GET
+URL: https://jsonplaceholder.typicode.com/invalidendpoint
+Body: None
+
+Test script:
+
+javascript
+pm.test('Status code is 404', function () { pm.response.to.have.status(404); });
+```
