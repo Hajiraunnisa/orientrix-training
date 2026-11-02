@@ -1,0 +1,464 @@
+{
+  "info": {
+    "name": "JSON Placeholder API Test",
+    "_postman_id": "json-placeholder-api-test-2026",
+    "description": "Automated test suite for the JSONPlaceholder fake REST API at https://jsonplaceholder.typicode.com.\nCovers GET, POST, PUT, and DELETE endpoints with response validation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://jsonplaceholder.typicode.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET All Posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response is an array', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "});",
+              "",
+              "pm.test('Array has 100 posts', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.length).to.eql(100);",
+              "});",
+              "",
+              "pm.test('First post has userId 1', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].userId).to.eql(1);",
+              "});",
+              "",
+              "pm.test('Response time is under 2 seconds', function () {",
+              "    pm.expect(pm.response.responseTime).to.below(2000);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/posts",
+          "host": ["{{base_url}}"],
+          "path": ["posts"]
+        }
+      }
+    },
+    {
+      "name": "GET Single Post (ID 1)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Post ID is 1', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.id).to.eql(1);",
+              "});",
+              "",
+              "pm.test('Post has userId', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.userId).to.be.a('number');",
+              "});",
+              "",
+              "pm.test('Post has title', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.title).to.be.a('string');",
+              "    pm.expect(jsonData.title).to.not.be.empty;",
+              "});",
+              "",
+              "pm.test('Post has body', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.body).to.be.a('string');",
+              "    pm.expect(jsonData.body).to.not.be.empty;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/posts/1",
+          "host": ["{{base_url}}"],
+          "path": ["posts", "1"]
+        }
+      }
+    },
+    {
+      "name": "GET Post 404 (Not Found)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404', function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test('Response body is empty', function () {",
+              "    pm.expect(pm.response.text()).to.eql('{}');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/posts/99999",
+          "host": ["{{base_url}}"],
+          "path": ["posts", "99999"]
+        }
+      }
+    },
+    {
+      "name": "GET All Users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response is an array', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "});",
+              "",
+              "pm.test('Array has 10 users', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.length).to.eql(10);",
+              "});",
+              "",
+              "pm.test('First user has email', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].email).to.be.a('string');",
+              "    pm.expect(jsonData[0].email).to.include('@');",
+              "});",
+              "",
+              "if (pm.response.code === 200) {",
+              "    var jsonData = pm.response.json();",
+              "    pm.collectionVariables.set('user_id', jsonData[0].id);",
+              "    pm.collectionVariables.set('user_email', jsonData[0].email);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": ["{{base_url}}"],
+          "path": ["users"]
+        }
+      }
+    },
+    {
+      "name": "GET Single User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('User has name', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.name).to.be.a('string');",
+              "    pm.expect(jsonData.name).to.not.be.empty;",
+              "});",
+              "",
+              "pm.test('User has username', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.username).to.be.a('string');",
+              "});",
+              "",
+              "pm.test('User has address with geo', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.address).to.be.an('object');",
+              "    pm.expect(jsonData.address.geo).to.be.an('object');",
+              "    pm.expect(jsonData.address.geo.lat).to.be.a('string');",
+              "    pm.expect(jsonData.address.geo.lng).to.be.a('string');",
+              "});",
+              "",
+              "pm.test('User has company', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.company).to.be.an('object');",
+              "    pm.expect(jsonData.company.name).to.be.a('string');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/users/1",
+          "host": ["{{base_url}}"],
+          "path": ["users", "1"]
+        }
+      }
+    },
+    {
+      "name": "GET Comments for Post 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response is an array', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "});",
+              "",
+              "pm.test('Comments belong to post 1', function () {",
+              "    var jsonData = pm.response.json();",
+              "    jsonData.forEach(function (comment) {",
+              "        pm.expect(comment.postId).to.eql(1);",
+              "    });",
+              "});",
+              "",
+              "pm.test('Comments have email field', function () {",
+              "    var jsonData = pm.response.json();",
+              "    jsonData.forEach(function (comment) {",
+              "        pm.expect(comment.email).to.include('@');",
+              "    });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/posts/1/comments",
+          "host": ["{{base_url}}"],
+          "path": ["posts", "1", "comments"]
+        }
+      }
+    },
+    {
+      "name": "POST Create New Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Response has title', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.title).to.eql('Test Post Title');",
+              "});",
+              "",
+              "pm.test('Response has body', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.body).to.eql('This is a test post body.');",
+              "});",
+              "",
+              "pm.test('Response has userId', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.userId).to.eql(1);",
+              "});",
+              "",
+              "pm.test('Response has new ID 101', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.id).to.eql(101);",
+              "});",
+              "",
+              "if (pm.response.code === 201) {",
+              "    var jsonData = pm.response.json();",
+              "    pm.collectionVariables.set('created_post_id', jsonData.id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Test Post Title\",\n    \"body\": \"This is a test post body.\",\n    \"userId\": 1\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/posts",
+          "host": ["{{base_url}}"],
+          "path": ["posts"]
+        }
+      }
+    },
+    {
+      "name": "PUT Update Post 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Title is updated', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.title).to.eql('Updated Title');",
+              "});",
+              "",
+              "pm.test('Body is updated', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.body).to.eql('Updated body content.');",
+              "});",
+              "",
+              "pm.test('ID is still 1', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.id).to.eql(1);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": 1,\n    \"title\": \"Updated Title\",\n    \"body\": \"Updated body content.\",\n    \"userId\": 1\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/posts/1",
+          "host": ["{{base_url}}"],
+          "path": ["posts", "1"]
+        }
+      }
+    },
+    {
+      "name": "DELETE Post 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response is empty or empty object', function () {",
+              "    var responseText = pm.response.text();",
+              "    pm.expect(responseText === '' || responseText === '{}').to.be.true;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/posts/1",
+          "host": ["{{base_url}}"],
+          "path": ["posts", "1"]
+        }
+      }
+    },
+    {
+      "name": "GET Filtered Posts by User 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response is an array', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "});",
+              "",
+              "pm.test('All posts belong to userId 1', function () {",
+              "    var jsonData = pm.response.json();",
+              "    jsonData.forEach(function (post) {",
+              "        pm.expect(post.userId).to.eql(1);",
+              "    });",
+              "});",
+              "",
+              "pm.test('Filtered results are 10 posts', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.length).to.eql(10);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/posts?userId=1",
+          "host": ["{{base_url}}"],
+          "path": ["posts"],
+          "query": [
+            {
+              "key": "userId",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
