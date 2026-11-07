@@ -15,7 +15,13 @@ The test suite uses the `data.csv` file to feed 20 different combinations of ema
 ### 2. Schema Validation
 Instead of checking individual fields, the test script uses `pm.response.to.have.jsonSchema` to validate the entire structure of the response. 
 *   Successful responses (`200`) are validated to ensure they contain a string `token`.
+
+  <img width="1421" height="902" alt="image" src="https://github.com/user-attachments/assets/4c1c6530-3a8b-4801-8f69-b07f8bcb88b7" />
+
 *   Error responses (`400`) are validated to ensure they contain a string `error`.
+
+  <img width="1532" height="876" alt="Screenshot 2026-11-07 003737" src="https://github.com/user-attachments/assets/0511611f-d686-41b6-8355-725d4de47c62" />
+
 
 ### 3. Continuous Integration (CI)
 A GitHub Actions workflow is configured to run on every `push` to this repository. It installs Node.js and Newman, then executes the Postman collection against the CSV data file. A `500ms` delay is applied between requests to respect the ReqRes API's rate limits.
