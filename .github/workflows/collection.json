@@ -1,0 +1,110 @@
+{
+  "info": {
+    "_postman_id": "bc1c4081-0b0b-4455-a4ed-9015a970a4f2",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59014052",
+    "_collection_link": "https://go.postman.co/collection/59014052-bc1c4081-0b0b-4455-a4ed-9015a970a4f2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Post data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "",
+              "// 1. Check expected status from CSV",
+              "pm.test(\"Status matches expected\", function () {",
+              "    const expectedRaw = pm.iterationData.get(\"expectedStatus\");",
+              "",
+              "    if (expectedRaw !== undefined && expectedRaw !== null && expectedRaw !== \"\") {",
+              "        pm.response.to.have.status(parseInt(expectedRaw, 10));",
+              "    } else {",
+              "        pm.expect(pm.response.code).to.be.oneOf([200, 201, 400, 401, 403, 429]);",
+              "    }",
+              "});",
+              "",
+              "// 2. Validate JSON Schema",
+              "pm.test(\"Response matches JSON Schema\", function () {",
+              "    const status = pm.response.code;",
+              "",
+              "    const schema = status === 200",
+              "        ? {",
+              "            type: \"object\",",
+              "            required: [\"token\"],",
+              "            properties: {",
+              "                token: { type: \"string\", minLength: 1 }",
+              "            },",
+              "            additionalProperties: true  // allow extra fields like support, _meta",
+              "        }",
+              "        : status === 429",
+              "        ? {",
+              "            type: \"object\",",
+              "            required: [\"error\", \"message\"],",
+              "            properties: {",
+              "                error: { type: \"string\" },",
+              "                message: { type: \"string\" }",
+              "            }",
+              "        }",
+              "        : {",
+              "            type: \"object\",",
+              "            required: [\"error\"],",
+              "            properties: {",
+              "                error: { type: \"string\", minLength: 1 }",
+              "            },",
+              "            additionalProperties: true",
+              "        };",
+              "",
+              "    pm.response.to.have.jsonSchema(schema);",
+              "});",
+              "",
+              "// 3. Check response is JSON",
+              "pm.test(\"Response is JSON\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "// 4. Check response time",
+              "pm.test(\"Response time is below 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://reqres.in/api/login",
+          "protocol": "https",
+          "host": [
+            "reqres",
+            "in"
+          ],
+          "path": [
+            "api",
+            "login"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    }
+  ]
+}
