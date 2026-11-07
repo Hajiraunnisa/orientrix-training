@@ -1,7 +1,7 @@
 name: Postman API Tests
 on: [push]
-
-jobs:
+     
+       
   test-api:
     runs-on: ubuntu-latest
     steps:
@@ -17,4 +17,5 @@ jobs:
         run: npm install -g newman
         
       - name: Run Postman Tests
-       run: newman run collection.json -d .github/workflows/data.csv --delay-request 500
+        run: newman run .github/workflows/collection.json -d .github/workflows/data.csv --delay-request 500
+
