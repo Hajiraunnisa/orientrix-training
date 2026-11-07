@@ -19,3 +19,8 @@ Instead of checking individual fields, the test script uses `pm.response.to.have
 
 ### 3. Continuous Integration (CI)
 A GitHub Actions workflow is configured to run on every `push` to this repository. It installs Node.js and Newman, then executes the Postman collection against the CSV data file. A `500ms` delay is applied between requests to respect the ReqRes API's rate limits.
+
+
+<img width="875" height="807" alt="Screenshot 2026-11-08 003444" src="https://github.com/user-attachments/assets/2c60b3c8-b893-4925-9b98-511c2cf4ba86" />
+successful!!!
+now if i change the expected status of any line, it was able to catch error also.
