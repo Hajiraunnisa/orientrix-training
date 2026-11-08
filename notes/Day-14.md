@@ -75,3 +75,65 @@ Priority: High
 
 Reasoning: In a real production system, this would be a severe GDPR violation and data breach, allowing anyone on the internet to scrape the entire user base .
 
+# Day 4 — Test Summary Report (Short)
+
+**Tester:** HAJIRA UNNISA BEGUM
+**Date:** 0811-2026
+**APIs tested:** JSONPlaceholder, Restful-Booker, Reqres.in
+**Tool:** Postman
+
+---
+
+## What I Tested and How
+
+| API | What I tested | How |
+|---|---|---|
+| **JSONPlaceholder** | Basic CRUD, no auth | GET/POST/PUT/DELETE on /posts, /users |
+| **Restful-Booker** | Authorization (no token, garbage token, IDOR) + multilingual data | POST /auth → token; PUT /booking/{id} with/without token; POST + GET with Telugu/Hindi/Urdu/emoji |
+| **Reqres.in** | Login, token-based access, user endpoints | POST /login → token; GET /users with/without token |
+
+---
+
+## What Passed
+
+| Test | API | Expected | Actual | Status |
+|---|---|---|---|---|
+| No token → PUT booking | Restful-Booker | 403 | 403 | ✅ |
+| Garbage token → PUT booking | Restful-Booker | 403 | 403 | ✅ |
+| IDOR → PUT other's booking with own token | Restful-Booker | 403 | 403 | ✅ |
+| Multilingual round-trip | Restful-Booker | Identical string | Identical string | ✅ |
+| Login returns token | Reqres.in | Token in response | Token received | ✅ |
+| GET users with valid token | Reqres.in | 200 + user list | 200 + data | ✅ |
+| CRUD operations | JSONPlaceholder | 200/201 | 200/201 | ✅ |
+
+---
+
+## What Failed / Was Blocked
+
+| Issue | API | Detail |
+|---|---|---|
+| Intermittent 404 | Restful-Booker | API resets every ~10 min; target booking wiped before request landed. Data loss, not auth failure. |
+| No rate limiting observed | Restful-Booker | Repeated 403s, no 429 or block. Risk observation, not confirmed bug. |
+| No real auth to test | JSONPlaceholder | API is open by design — no login, no tokens. Cannot test authorization here. |
+| Privacy checklist not executed live | — | Checklist written but no real children's exam-results app available to audit. |
+
+---
+
+## What I'd Test Next With More Time
+
+1. **Vertical privilege escalation** — can a normal user reach admin endpoints? (PortSwigger Access Control labs)
+2. **Method-based bypass** — if PUT is blocked, try PATCH/POST/GET on same endpoint.
+3. **Token expiry** — does the Reqres.in token expire? Can an old token still access data?
+4. **Unicode normalization** — send same name in NFC vs NFD form, search for it, see if API treats them as equal.
+5. **Rate limiting** — send 100 requests in 60 seconds, check for 429.
+6. **Run privacy checklist on a real app** — with permission, audit an actual exam-results portal.
+
+---
+
+## Summary
+
+- **Restful-Booker:** all three authorization tests passed (403), multilingual round-trip passed (identical).
+- **Reqres.in:** login and token-based access worked.
+- **JSONPlaceholder:** CRUD worked; no auth to test.
+- **Blocker:** Restful-Booker's 10-minute reset caused 404s — tests must be create → verify → act quickly.
+- **Next:** PortSwigger Access Control labs + real-app privacy audit.
