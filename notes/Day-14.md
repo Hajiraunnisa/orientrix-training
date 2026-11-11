@@ -75,7 +75,7 @@ Priority: High
 
 Reasoning: In a real production system, this would be a severe GDPR violation and data breach, allowing anyone on the internet to scrape the entire user base .
 
-# Day 4 — Test Summary Report (Short)
+# Day 5— Test Summary Report (Short)
 
 **Tester:** HAJIRA UNNISA BEGUM
 **Date:** 0811-2026
